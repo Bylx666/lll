@@ -1,0 +1,28 @@
+#head{
+    top:0;
+    left:0;
+    width: 100%;
+    height: 10rem;
+    position: fixed;
+    background: linear-gradient(75deg, rgba(0,0,0,0) , #E95193);
+}
+
+#background{
+    z-index: -1;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-size: cover;
+    background-image: url('imgs/bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.title_pic{
+    top:2rem;
+    left:2rem;
+    height: 6rem;
+    position: absolute;
+}
