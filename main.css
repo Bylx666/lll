@@ -1,3 +1,4 @@
+div{left:0;top:0}
 #head{
     top:0;
     left:0;
@@ -21,6 +22,71 @@
     background-repeat: no-repeat;
 }
 
+#home{
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    left: 50%;
+    top: 50%;
+    transition: all 1s;
+    transform: translate(-50%,-50%);
+}
+
+
+
+.nom{
+    margin: 4rem;
+    border-radius: 5rem;
+    height: 40rem;
+    width: 30rem;
+    transition: all 0.5s;
+    box-shadow: 0 0 5rem rgba(255, 255, 255, 0.9);
+    background:rgba(255, 255, 255, 0.3);
+}
+.nom:hover{
+    background: rgba(0,0,0,0.3);
+}
+
+.pic{
+    transition: all 1s;
+    margin:2rem;
+    height: 26rem;
+    width: 26rem;
+    background-position: center;
+    background-size: cover;
+    border-radius:5rem;
+}
+.pic:hover{
+    margin: 1rem;
+    height: 28rem;
+    width:28rem;
+}
+.title{
+    transition: all 0.5s;
+    font-size: 3rem;
+    color: black;
+    text-align: center;
+}
+.title::first-letter{
+    font-size: 3.5rem;
+}
+.title:hover,.title:active{
+    color: white;
+    font-size: 3.5rem;
+}
+.subtitle{
+    transition: all 0.3s;
+    font-size: 2.5rem;
+    color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+.subtitle::first-letter{
+    font-size: 3rem;
+}
+.subtitle:hover,.subtitle:active{
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 3rem;
+}
 .title_pic{
     top:2rem;
     left:2rem;
