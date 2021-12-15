@@ -52,6 +52,16 @@ function picBackground() {
     }
  }
 
+ function goTo(a,b){
+    var A = document.getElementById(a).style
+    var B = document.getElementById(b).style
+    A.opacity = '0'
+    clearTimeout(noneDisplay)
+    noneDisplay = setTimeout(function(){A.display = 'none'},1000) 
+    B.opacity = '1'
+    B.display = 'flex'
+ }
+
  function notice(content,hojyuu) { 
     document.getElementsByClassName('notice_content')[0].innerHTML = content
     document.getElementsByClassName('notice_hojyuu')[0].innerHTML = hojyuu

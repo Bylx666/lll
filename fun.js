@@ -9,7 +9,6 @@ function init() {
         home.flexDirection = 'column'
         home.transform = 'translate(-50%,0)'
         home.top = '12rem'
-        document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 200 +"px"
     }
     else{
         backgroundImageAlter('c')
@@ -50,10 +49,6 @@ function exhibit(){
 }
 
 function goToExhibition(){
-    var home = document.getElementById('home').style
-    var exhibition = document.getElementById('exhibition').style
-    home.opacity = '0'
-    var none = setTimeout(function(){home.display = 'none'},1000) 
-    exhibition.opacity = '1'
-    exhibition.display = 'flex'
+    goTo('home','exhibition')
+    document.getElementById('header').setAttribute('onclick','goTo(\'exhibition\',\'home\')')
 }
