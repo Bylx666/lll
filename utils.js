@@ -28,10 +28,18 @@ function picBackground() {
  function goToFullscreen() {
     if(document.fullscreenElement == null) {
         document.documentElement.requestFullscreen();
+        document.documentElement.mozRequestFullScreen();
+        document.documentElement.msRequestFullScreen();
+        document.documentElement.webkitRequestFullScreen();
         notice('ヘッダーをクリックして全画面表示から抜けますください。'
             ,'Click the header to escape from fullscreen!'
         )
-    }else document.exitFullscreen();
+    }else {
+        document.exitFullscreen();
+        document.msExitFullscreen();
+        document.mozCancelFullScreen()
+        document.webkitExitFullscreen();
+    }
  }
 
  function notice(content,hojyuu) { 
