@@ -30,11 +30,21 @@ div{font-family: ll;}
 #home{
     transition: all 1s;
     position: absolute;
-    display: flex;
+    display: none;
     left: 50%;
     top: 50%;
     transition: all 1s;
     transform: translate(-50%,-50%);
+}
+
+#exhibition{
+    transition: all 1s;
+    position: absolute;
+    display: flex;
+    top:12rem;
+    left:0;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 #notice{

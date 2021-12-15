@@ -1,6 +1,7 @@
 
 function init() {
     picBackground()
+    exhibit()
     document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 100 +"px"
     if(document.getElementById('background').clientWidth<document.getElementById('background').clientHeight){
         backgroundImageAlter('p')
@@ -8,6 +9,7 @@ function init() {
         home.flexDirection = 'column'
         home.transform = 'translate(-50%,0)'
         home.top = '12rem'
+        document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 200 +"px"
     }
     else{
         backgroundImageAlter('c')
@@ -26,7 +28,6 @@ function backgroundImageAlter(screenPosition) {
         if(screenPosition == 'p'){
             alterTransition()
             backgroundImageUrl = "imgs/bg/p"+randomNumber(21,1)+".jpg";
-            document.getElementById('background').style.backgroundImage = "url("+backgroundImageUrl+")"
         }
         else{
             alterTransition()
@@ -35,4 +36,24 @@ function backgroundImageAlter(screenPosition) {
         }
     },5000)
     // clearInterval(changeBackgroundImage)
+}
+function exhibit(){
+    for(var i = 1;i<18;i++){
+        var div = "<div class=\"nom\"><div class=\"pic bg/c"+i+"\"></div><div class=\"title\">c"+i+".jpg</div></div>"
+        document.getElementById('exhibition').innerHTML += div
+    }
+    for(var i = 1;i<21;i++){
+        var div = "<div class=\"nom\"><div class=\"pic bg/p"+i+"\"></div><div class=\"title\">p"+i+".jpg</div></div>"
+        document.getElementById('exhibition').innerHTML += div
+    }
+    picBackground()
+}
+
+function goToExhibition(){
+    var home = document.getElementById('home').style
+    var exhibition = document.getElementById('exhibition').style
+    home.opacity = '0'
+    var none = setTimeout(function(){home.display = 'none'},1000) 
+    exhibition.opacity = '1'
+    exhibition.display = 'flex'
 }
