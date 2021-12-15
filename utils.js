@@ -4,7 +4,7 @@
 */
 function randomNumber(max,min) { 
     newRandomNumber = Math.floor(Math.random()*(max-min+1)+min);
-    if(lastRandomNumber !== -1){
+    if(lastRandomNumber !== undefined){
         if (newRandomNumber == lastRandomNumber) {
             randomNumber(max,min);
         }
@@ -24,3 +24,19 @@ function picBackground() {
         document.getElementsByClassName('pic')[i].style.backgroundImage = "url(imgs/"+document.getElementsByClassName('pic')[i].classList[1]+".jpg)"
     }
  }
+
+ function goToFullscreen() {
+    if(document.fullscreenElement == null) {
+        document.documentElement.requestFullscreen();
+        notice('ヘッダーをクリックして全画面表示から抜けますください。'
+            ,'Click the header to escape from fullscreen!'
+        )
+    }else document.exitFullscreen();
+ }
+
+ function notice(content,hojyuu) { 
+    document.getElementsByClassName('notice_content')[0].innerHTML = content
+    document.getElementsByClassName('notice_hojyuu')[0].innerHTML = hojyuu
+    document.getElementById('notice').style.opacity = 1
+    var noticeTime = setTimeout(function(){document.getElementById('notice').style.opacity = 0},4000)
+  }

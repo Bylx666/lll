@@ -8,18 +8,27 @@
 </head>
 <body>
     <div id="background"></div>
-    <div id="head">
-        <img class="title_pic" src="imgs/title.png">
+    <div id="header" onclick="goToFullscreen()">
+        <img class="title_pic" src="imgs/titlepic.jpg">
     </div>
     <div id="home">
         <div class="nom">
             <div class="pic bg/c2"></div>
             <div class="title">エキシビション</div>
-            <div class="subtitle">exhibition</div></div>
-        <div class="nom"></div>
+            <div class="subtitle">Exhibition</div>
+        </div>
+        <div class="nom">
+            <div class="pic cover/startDash"></div>
+            <div class="title">ミュージック</div>
+            <div class="subtitle">Music</div>
+        </div>
+    </div>
+    <div id="notice">
+        <div class="notice_content">何でもない</div>
+        <div class="notice_hojyuu">Nothing here</div>
     </div>
 </body>
 <script>
     init()
-    lastRandomNumber = -1
+    var lastRandomNumber
 </script>

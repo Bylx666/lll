@@ -1,5 +1,10 @@
-div{left:0;top:0}
-#head{
+div{font-family: ll;}
+@font-face {
+    font-family: ll;
+    src: url(imgs/e.otf);
+}
+#header{
+    z-index: 29;
     top:0;
     left:0;
     width: 100%;
@@ -23,19 +28,38 @@ div{left:0;top:0}
 }
 
 #home{
+    transition: all 1s;
     position: absolute;
     display: flex;
-    flex-wrap: wrap;
     left: 50%;
     top: 50%;
     transition: all 1s;
     transform: translate(-50%,-50%);
 }
 
-
+#notice{
+    z-index: 30;
+    padding: 2rem 0;
+    flex-direction: column;
+    bottom:3rem;
+    display: flex;
+    transition: all 1s;
+    position: fixed;
+    opacity: 0;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    background:linear-gradient(90deg,rgba(0,0,0,0),white 50%,rgba(0,0,0,0));
+}
+.notice_content{
+    font-size: 4rem;
+}
+.notice_hojyuu{
+    font-size: 3rem;
+}
 
 .nom{
-    margin: 4rem;
+    margin: 1rem 4rem;
     border-radius: 5rem;
     height: 40rem;
     width: 30rem;

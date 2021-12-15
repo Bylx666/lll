@@ -4,6 +4,10 @@ function init() {
     document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 100 +"px"
     if(document.getElementById('background').clientWidth<document.getElementById('background').clientHeight){
         backgroundImageAlter('p')
+        var home = document.getElementById('home').style
+        home.flexDirection = 'column'
+        home.transform = 'translate(-50%,0)'
+        home.top = '12rem'
     }
     else{
         backgroundImageAlter('c')
