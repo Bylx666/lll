@@ -25,20 +25,30 @@ function picBackground() {
     }
  }
 
- function goToFullscreen() {
+ function goToFullscreen(element) {
     if(document.fullscreenElement == null) {
-        document.documentElement.requestFullscreen();
-        document.documentElement.mozRequestFullScreen();
-        document.documentElement.msRequestFullScreen();
-        document.documentElement.webkitRequestFullScreen();
+        if (element.requestFullscreen) {
+            element.requestFullscreen()
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen()
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen()
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullScreen()
+        };
         notice('ヘッダーをクリックして全画面表示から抜けますください。'
             ,'Click the header to escape from fullscreen!'
         )
     }else {
-        document.exitFullscreen();
-        document.msExitFullscreen();
-        document.mozCancelFullScreen()
-        document.webkitExitFullscreen();
+        if (document.exitFullscreen) {
+            document.exitFullscreen()
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen()
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen()
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen()
+        }
     }
  }
 
