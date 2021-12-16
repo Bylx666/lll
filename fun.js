@@ -38,17 +38,12 @@ function backgroundImageAlter(screenPosition) {
 }
 function exhibit(){
     for(var i = 1;i<18;i++){
-        var div = "<div class=\"nom\"><div class=\"pic bg/c"+i+"\"></div><div class=\"title\">c"+i+".jpg</div></div>"
+        var div = "<div class=\"nom\" onclick=\"showPicture(\'c"+i+"\')\"><div class=\"pic bg/c"+i+"\"></div><div class=\"title\">c"+i+".jpg</div></div>"
         document.getElementById('exhibition').innerHTML += div
     }
     for(var i = 1;i<21;i++){
-        var div = "<div class=\"nom\"><div class=\"pic bg/p"+i+"\"></div><div class=\"title\">p"+i+".jpg</div></div>"
+        var div = "<div class=\"nom\" onclick=\"showPicture(\'p"+i+"\')\"><div class=\"pic bg/p"+i+"\"></div><div class=\"title\">p"+i+".jpg</div></div>"
         document.getElementById('exhibition').innerHTML += div
     }
     picBackground()
-}
-
-function goToExhibition(){
-    goTo('home','exhibition')
-    document.getElementById('header').setAttribute('onclick','goTo(\'exhibition\',\'home\')')
 }

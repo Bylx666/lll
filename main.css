@@ -3,6 +3,9 @@ div{font-family: ll;}
     font-family: ll;
     src: url(imgs/e.otf);
 }
+html{
+    overflow: hidden;
+}
 #header{
     transition: all 1s;
     z-index: 29;
@@ -28,6 +31,27 @@ div{font-family: ll;}
     background-repeat: no-repeat;
 }
 
+#scrollbar{
+    border-radius: 2rem;
+    box-shadow: 0 0 2rem black inset;
+    z-index: 19;
+    transition: all 1s;
+    position: fixed;
+    top:10rem;
+    right:0;
+    width: 3rem;
+    height: calc(100% - 10rem);
+}
+.scrollthumb{
+    top:0;
+    position: relative;
+    box-shadow: 0 0 1rem black;
+    border-radius: 2rem;
+    height: 10%;
+    width: 3rem;
+    background: rgba(255, 255, 255, 0.8);
+}
+
 #home{
     transition: all 1s;
     position: absolute;
@@ -39,7 +63,8 @@ div{font-family: ll;}
 }
 
 #exhibition{
-    transition: all 1s;
+    z-index: 0;
+    transition: top 0.2s,opacity 1s;
     position: absolute;
     display: none;
     opacity: 0;
@@ -48,7 +73,11 @@ div{font-family: ll;}
     width: 100%;
     flex-wrap: wrap;
 }
+
 #show_picture{
+    display: none;
+    left:0;
+    top:0;
     z-index: 20;
     position: fixed;
     height: 100%;
@@ -70,7 +99,7 @@ div{font-family: ll;}
     padding: 2rem 0;
     flex-direction: column;
     bottom:3rem;
-    display: flex;
+    display: none;
     transition: all 1s;
     position: fixed;
     opacity: 0;

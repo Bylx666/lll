@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1">
     <title>ラブライブ！</title>
     <link rel="stylesheet" type="text/css" href="main.css">
     <script src="fun.js"></script>
@@ -8,11 +9,15 @@
 </head>
 <body>
     <div id="background"></div>
+    <div style="z-index:32;position: fixed;top:0;left: 0;width:30rem;height: 10rem;" onclick="goTo('a','a')"></div>
     <div id="header" onclick="goToFullscreen(document.documentElement)">
         <img class="title_pic" src="imgs/titlepic.jpg">
     </div>
+    <div id="scrollbar">
+        <div class="scrollthumb"><div style="position: relative;height: 1rem;width: 1rem;top: 50%;left: 50%;transform: translate(-50%,-50%) rotate(45deg);background: rgba(0,0,0,0.8);"></div></div>
+    </div>
     <div id="home">
-        <div class="nom" onclick="goToExhibition()">
+        <div class="nom" onclick="goTo('home','exhibition')">
             <div class="pic bg/c2"></div>
             <div class="title">エキシビション</div>
             <div class="subtitle">Exhibition</div>
@@ -23,9 +28,10 @@
             <div class="subtitle">Music</div>
         </div>
     </div>
-    <div id="exhibition">
-        <div id="show_picture"><div class="show_picture_container"></div></div>
+    <div id="exhibition" class="page">
+        
     </div>
+    <div id="show_picture" class="page"><div class="show_picture_container"></div></div>
     <div id="notice">
         <div class="notice_content">何でもない</div>
         <div class="notice_hojyuu">Nothing here</div>
@@ -33,6 +39,5 @@
 </body>
 <script>
     init()
-    var lastRandomNumber
-    var noneDisplay
+    
 </script>
