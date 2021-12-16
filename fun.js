@@ -2,6 +2,7 @@
 function init() {
     picBackground()
     exhibit()
+    music()
     document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 100 +"px"
     if(document.getElementById('background').clientWidth<document.getElementById('background').clientHeight){
         backgroundImageAlter('p')
@@ -45,5 +46,14 @@ function exhibit(){
         var div = "<div class=\"nom\" onclick=\"showPicture(\'p"+i+"\')\"><div class=\"pic bg/p"+i+"\"></div><div class=\"title\">p"+i+".jpg</div></div>"
         document.getElementById('exhibition').innerHTML += div
     }
+    picBackground()
+}
+
+function music(){
+    for(var i = 0;i < musicData.length;i++){
+        var div = "<div class=\"nom\" onclick=\"play(\'"+musicData[i].url+"\');goTo(\'music\',\'player\')\"><div class=\"pic cover/"+musicData[i].cvr+"\"></div><div class=\"title\">"+musicData[i].tt+".</div><div class=\"subtitle\">"+musicData[i].at+".</div></div>"
+        document.getElementById('music').innerHTML += div
+    }
+    
     picBackground()
 }

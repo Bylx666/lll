@@ -75,7 +75,6 @@ html{
     width: 100%;
     flex-wrap: wrap;
 }
-
 #show_picture{
     display: none;
     left:0;
@@ -94,6 +93,28 @@ html{
     background-position: center;
     background-repeat: no-repeat;
     background-image: url(imgs/bg/c10.jpg);
+}
+
+#music{
+    z-index: 0;
+    transition: top 0.2s,opacity 1s;
+    position: absolute;
+    display: none;
+    opacity: 0;
+    top:10rem;
+    left:0;
+    width: 100%;
+    flex-wrap: wrap;
+}
+#player{
+    z-index: 20;
+    display: none;
+    position: fixed;
+    top: 0rem;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(120deg, rgba(0,0,0,0.7) , rgba(233,81,147,0.7))
 }
 
 #notice{

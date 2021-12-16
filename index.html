@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="main.css">
     <script src="fun.js"></script>
     <script src="utils.js"></script>
+    <script type="text/javascript" src="data.js"></script>
 </head>
 <body>
     <div id="background"></div>
@@ -23,16 +24,17 @@
             <div class="title">エキシビション</div>
             <div class="subtitle">Exhibition</div>
         </div>
-        <div class="nom">
+        <div class="nom" onclick="goTo('home','music')">
             <div class="pic cover/startDash"></div>
             <div class="title">ミュージック</div>
             <div class="subtitle">Music</div>
         </div>
     </div>
-    <div id="exhibition" class="page scrollable">
-        
-    </div>
+    <div id="exhibition" class="page scrollable"></div>
     <div id="show_picture" class="page"><div class="show_picture_container"></div></div>
+
+    <div id="music" class="page scrollable"></div>
+    <div id="player" class="page"><audio controls id="musicMedia"></audio></div>
     <div id="notice">
         <div class="notice_content">何でもない</div>
         <div class="notice_hojyuu">Nothing here</div>

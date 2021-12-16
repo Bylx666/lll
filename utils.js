@@ -38,6 +38,12 @@ function activePageSelector() {
    }
  }
 
+function play(music){
+    var media = document.getElementById('musicMedia')
+    media.setAttribute('src',music)
+    media.play()
+}
+
 function picBackground() { 
     for(var i = 0;i<document.getElementsByClassName('pic').length;i++){
         document.getElementsByClassName('pic')[i].style.backgroundImage = "url(imgs/"+document.getElementsByClassName('pic')[i].classList[1]+".jpg)"
@@ -86,7 +92,8 @@ function picBackground() {
         document.getElementById('scrollbar').style.display = 'none'
         return console.log('goto home')
      }
-     
+     if(b == 'player') { document.getElementById('header').style.background = 'none' }
+     else { document.getElementById('header').style.background = 'linear-gradient(75deg, rgba(0,0,0,0) , #E95193)' }
     console.log('goto '+b+' from',a)
     document.getElementById('header').setAttribute('onclick','goTo(\"'+b+'\",\"'+a+'\")')
     var A = document.getElementById(a).style
