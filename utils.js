@@ -170,7 +170,7 @@ function picBackground() {
       })
       content.addEventListener('touchmove',function (e) {
         if(!touched) {return}
-        now = ( - e.targetTouches[0].pageY + start ) / 12 + end
+        now = ( - e.targetTouches[0].pageY + start ) / 6 + end
         if(now < 0) { now = 0 }
         else if(now > track.offsetHeight - thumb.offsetHeight) { now = track.offsetHeight - thumb.offsetHeight }
         thumb.style.top = now + "px"
@@ -179,8 +179,8 @@ function picBackground() {
         e.preventDefault()
       }, { passive: false })
       content.addEventListener('touchend',function () {
-        touched = false
         end = thumb.offsetTop
+        touched = false
       })
   }
 
