@@ -1,5 +1,4 @@
 var lastRandomNumber
-var noneDisplay
 var fadeCd = 0
 
 /** 
@@ -10,7 +9,7 @@ function randomNumber(max,min) {
     newRandomNumber = Math.floor(Math.random()*(max-min+1)+min);
     if(lastRandomNumber !== undefined){
         if (newRandomNumber == lastRandomNumber) {
-            randomNumber(max,min);
+            return newRandomNumber = Math.floor(Math.random()*(max-min+1)+min);
         }
         else{
             lastRandomNumber = newRandomNumber
@@ -24,12 +23,18 @@ function randomNumber(max,min) {
  }
 
 function activePageSelector() { 
-    for(var i = 0; i < document.getElementsByClassName('page').length;){
-        if(document.getElementsByClassName('page')[i].style.display == 'none'){ i++ }
-        else if(document.getElementsByClassName('page')[i].style.display == 'flex'){ 
-            return document.getElementsByClassName('page')[i]
+    var j = document.getElementsByClassName('page').length
+    for(var i = 0; i < document.getElementsByClassName('page').length;i++){
+        if(document.getElementsByClassName('page')[i].style.display == 'flex'){ 
+            return document.getElementsByClassName('page')[i] 
          }
-        else {return document.getElementsByClassName('page')[0]}
+        else{
+            j--
+            if (j == 0) {
+                return document.getElementById('foreground')
+            }
+            continue
+        }
    }
  }
 
@@ -72,22 +77,32 @@ function picBackground() {
         var A = activePageSelector().style
         var B = document.getElementById('home').style
         fadeCd = 1;
+        A.display = 'flex'
         setTimeout(function(){A.display = 'none'; fadeCd = 0},1000) 
-        A.opacity = '0'
+        A.opacity = '1'
         B.display = 'flex'
-        setTimeout(function(){B.opacity = '1'},10) 
+        setTimeout(function(){B.opacity = '1';A.opacity = '0' },10) 
         document.getElementById('home').style.display = "flex"
+        document.getElementById('scrollbar').style.display = 'none'
         return console.log('goto home')
      }
+     
     console.log('goto '+b+' from',a)
     document.getElementById('header').setAttribute('onclick','goTo(\"'+b+'\",\"'+a+'\")')
     var A = document.getElementById(a).style
     var B = document.getElementById(b).style
     A.opacity = '0'
     fadeCd = 1;
-    setTimeout(function(){A.display = 'none'; fadeCd = 0;},1000) 
+    setTimeout(function(){A.display = 'none'; fadeCd = 0;},300) 
     B.display = 'flex'
     setTimeout(function(){B.opacity = '1'},10) 
+
+    setTimeout(function(){
+        if(!activePageSelector().className.includes('scrollable')) {
+            document.getElementById('scrollbar').style.display = 'none'
+        }
+        else{document.getElementById('scrollbar').style.display = 'flex'; scrollBar()}
+    },310)
  }
 
  function scrollBar() { 
@@ -96,14 +111,13 @@ function picBackground() {
     var content = activePageSelector()
     var view = document.documentElement.clientHeight
     var all = document.documentElement.scrollHeight
-    var scrollBarHeight = view / ( all + view )
+    var scrollBarHeight = view / all
     thumb.style.height = scrollBarHeight * 100 + "%"
-
     
     var clicked = false
     var start
     var end = 0
-    var now
+    var now = 0
     thumb.onmousedown = function (e) { 
         clicked = true
         start = e.pageY
@@ -118,7 +132,7 @@ function picBackground() {
         if(now < 0) { now = 0 }
         else if(now > track.offsetHeight - thumb.offsetHeight) { now = track.offsetHeight - thumb.offsetHeight }
         thumb.style.top = now + "px"
-        activePageSelector().style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
+        content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         if(window.getSelection) {window.getSelection().removeAllRanges()}
      }
     document.addEventListener('touchmove',function (e) {
@@ -127,7 +141,7 @@ function picBackground() {
         if(now < 0) { now = 0 }
         else if(now > track.offsetHeight - thumb.offsetHeight) { now = track.offsetHeight - thumb.offsetHeight }
         thumb.style.top = now + "px"
-        activePageSelector().style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
+        content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         if(window.getSelection) {window.getSelection().removeAllRanges()}
      })
     document.onmouseup = function () {
@@ -139,6 +153,33 @@ function picBackground() {
         end = thumb.offsetTop
      })
     
+     var touched = false
+     document.onwheel = wheel
+     function wheel(event) { 
+        now += event.deltaY / 5
+        if(now < 0) { now = 0 }
+        else if(now > track.offsetHeight - thumb.offsetHeight) { now = track.offsetHeight - thumb.offsetHeight }
+        thumb.style.top = now + "px"
+        content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
+        end = thumb.offsetTop
+      }
+      content.addEventListener('touchstart',function (e) {
+        touched = true
+        start = e.targetTouches[0].pageY
+      })
+      content.addEventListener('touchmove',function (e) {
+        if(!touched) {return}
+        now = ( - e.targetTouches[0].pageY + start ) / 12 + end
+        if(now < 0) { now = 0 }
+        else if(now > track.offsetHeight - thumb.offsetHeight) { now = track.offsetHeight - thumb.offsetHeight }
+        thumb.style.top = now + "px"
+        content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
+        if(window.getSelection) {window.getSelection().removeAllRanges()}
+      })
+      content.addEventListener('touchend',function () {
+        touched = false
+        end = thumb.offsetTop
+      })
   }
 
  function showPicture(order) { 

@@ -16,8 +16,9 @@
     <div id="scrollbar">
         <div class="scrollthumb"><div style="position: relative;height: 1rem;width: 1rem;top: 50%;left: 50%;transform: translate(-50%,-50%) rotate(45deg);background: rgba(0,0,0,0.8);"></div></div>
     </div>
-    <div id="home">
-        <div class="nom" onclick="goTo('home','exhibition');scrollBar()">
+    <div id="foreground"></div>
+    <div id="home" class="page" style="display: flex;">
+        <div class="nom" onclick="goTo('home','exhibition')">
             <div class="pic bg/c2"></div>
             <div class="title">エキシビション</div>
             <div class="subtitle">Exhibition</div>
@@ -28,7 +29,7 @@
             <div class="subtitle">Music</div>
         </div>
     </div>
-    <div id="exhibition" class="page">
+    <div id="exhibition" class="page scrollable">
         
     </div>
     <div id="show_picture" class="page"><div class="show_picture_container"></div></div>
