@@ -143,6 +143,7 @@ function picBackground() {
         thumb.style.top = now + "px"
         content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         if(window.getSelection) {window.getSelection().removeAllRanges()}
+        e.preventDefault()
      })
     document.onmouseup = function () {
         clicked = false
@@ -175,6 +176,7 @@ function picBackground() {
         thumb.style.top = now + "px"
         content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         if(window.getSelection) {window.getSelection().removeAllRanges()}
+        e.preventDefault()
       })
       content.addEventListener('touchend',function () {
         touched = false
