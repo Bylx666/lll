@@ -144,7 +144,7 @@ function picBackground() {
         content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         if(window.getSelection) {window.getSelection().removeAllRanges()}
         e.preventDefault()
-     })
+     }, { passive: false })
     document.onmouseup = function () {
         clicked = false
         end = thumb.offsetTop
@@ -177,7 +177,7 @@ function picBackground() {
         content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         if(window.getSelection) {window.getSelection().removeAllRanges()}
         e.preventDefault()
-      })
+      }, { passive: false })
       content.addEventListener('touchend',function () {
         touched = false
         end = thumb.offsetTop
