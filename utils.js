@@ -1,5 +1,6 @@
 var lastRandomNumber
 var fadeCd = 0
+var songProgress
 
 /** 
  *  @param max The maxium number
@@ -38,11 +39,90 @@ function activePageSelector() {
    }
  }
 
-function play(music){
+function play(musicURL,musicCover){
     var media = document.getElementById('musicMedia')
-    media.setAttribute('src',music)
+    var button = document.getElementsByClassName('player_button')[1]
+    button.style.backgroundImage = "url('imgs/icons/pause.svg')"
+    button.setAttribute('onclick','pause()')
+    if(musicURL == 'button') { media.play(); return }
+    document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicCover+".jpg)"
+    media.setAttribute('src',musicURL)
     media.play()
+    var pe = document.getElementById('playerEntrance')
+    pe.onclick = function () { goTo('music','player') }
+    if(songProgress == undefined) { musicProgress() }
 }
+function pause() { 
+    var media = document.getElementById('musicMedia')
+    var button = document.getElementsByClassName('player_button')[1]
+    button.style.backgroundImage = "url('imgs/icons/play.svg')"
+    button.setAttribute('onclick','play(\'button\')')
+    media.pause()
+ }
+function musicProgress() { 
+    var clicked = false
+    var media = document.getElementById('musicMedia')
+    var progress = document.querySelector('.music_progress')
+    var thumb = document.querySelector('.music_progress_thumb')
+    var position
+    var songProgress = setInterval(function (){
+        if(clicked) { return }
+        var now = media.currentTime
+        var total = media.duration
+        position = now / total * document.documentElement.clientWidth
+        progress.style.width = position + "px"
+        thumb.style.left = position + "px"
+        if(now == total) { pause() }
+    },500)
+
+    var start
+    var now
+    function der(e) { 
+        if (clicked) { return }
+        if (e.targetTouches != undefined) {
+            now = e.targetTouches[0].pageX
+        } else{
+            now = e.pageX
+        }
+        progress.style.width = now + "px" 
+        thumb.style.left = now + "px" 
+        media.currentTime = now / document.documentElement.clientWidth * media.duration
+     }
+    function moveStart(e) {
+        if (e.targetTouches != undefined) {
+            start = e.targetTouches[0].pageX
+        } else{
+            start = e.pageX
+        }
+        clicked = true
+    }
+    function move(e){
+        if(!clicked){ return }
+        if (e.targetTouches != undefined) {
+            now = e.targetTouches[0].pageX - start + position
+        } else{
+            now = e.pageX - start + position
+        }
+        if (now < 0) { now = 0 }
+        if (now > document.documentElement.clientWidth) { now = document.documentElement.clientWidth ;}
+        progress.style.width = now + "px" 
+        thumb.style.left = now + "px" 
+    }
+    function moveEnd() { 
+        if(!clicked){ return }
+        media.currentTime = now / document.documentElement.clientWidth * media.duration
+        clicked = false
+     }
+    thumb.addEventListener('mousedown', moveStart)
+    thumb.addEventListener('touchstart', moveStart)
+    document.addEventListener('mousemove', move)
+    document.addEventListener('touchmove', move)
+    document.addEventListener('mouseup', moveEnd)
+    document.addEventListener('touchend', moveEnd)
+    var bar = document.querySelector('.music_progress_bar')
+    bar.addEventListener('mouseup', der)
+    bar.addEventListener('touchend', der)
+ }
 
 function picBackground() { 
     for(var i = 0;i<document.getElementsByClassName('pic').length;i++){
@@ -171,11 +251,12 @@ function picBackground() {
         content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         end = thumb.offsetTop
       }
-      content.addEventListener('touchstart',function (e) {
+      document.addEventListener('touchstart',function (e) {
         touched = true
         start = e.targetTouches[0].pageY
       })
-      content.addEventListener('touchmove',function (e) {
+      document.addEventListener('touchmove',function (e) {
+        if(clicked) {return}
         if(!touched) {return}
         now = ( - e.targetTouches[0].pageY + start ) / 6 + end
         if(now < 0) { now = 0 }
@@ -185,7 +266,7 @@ function picBackground() {
         if(window.getSelection) {window.getSelection().removeAllRanges()}
         e.preventDefault()
       }, { passive: false })
-      content.addEventListener('touchend',function () {
+      document.addEventListener('touchend',function () {
         end = thumb.offsetTop
         touched = false
       })

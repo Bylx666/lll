@@ -33,8 +33,21 @@
     <div id="exhibition" class="page scrollable"></div>
     <div id="show_picture" class="page"><div class="show_picture_container"></div></div>
 
-    <div id="music" class="page scrollable"></div>
-    <div id="player" class="page"><audio controls id="musicMedia"></audio></div>
+    <div id="music" class="page scrollable"><div id="playerEntrance" class="pic cover/startDash"></div></div>
+    <div id="player" class="page">
+        <audio id="musicMedia"></audio>
+        <div class="play_cover"></div>
+        <div id="playerControl">
+            <div class="player_button" style="background-image: url('imgs/icons/previous.svg');" ></div>
+            <div class="player_button" style="background-image: url('imgs/icons/play.svg');" onclick="play('button')"></div>
+            <div class="player_button" style="background-image: url('imgs/icons/next.svg');"></div>
+        </div>
+        <div class="music_progress_bar">
+            <div class="music_progress"></div>
+            <div class="music_progress_thumb"></div>
+        </div>
+    </div>
+    
     <div id="notice">
         <div class="notice_content">何でもない</div>
         <div class="notice_hojyuu">Nothing here</div>
