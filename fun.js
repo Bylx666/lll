@@ -51,9 +51,16 @@ function exhibit(){
 
 function music(){
     for(var i = 0;i < musicData.length;i++){
-        var div = "<div class=\"nom\" onclick=\"play(\'"+musicData[i].url+"\',\'"+musicData[i].cvr+"\');goTo(\'music\',\'player\')\"><div class=\"pic cover/"+musicData[i].cvr+"\"></div><div class=\"title\">"+musicData[i].tt+".</div><div class=\"subtitle\">"+musicData[i].at+".</div></div>"
+        var div = "<div class=\"nom\" onclick=\"play(\'"+i+"\',\'"+musicData[i].url+"\',\'"+musicData[i].cvr+"\');goTo(\'music\',\'player\')\"><div class=\"pic cover/"+musicData[i].cvr+"\"></div><div class=\"title\">"+musicData[i].tt+".</div><div class=\"subtitle\">"+musicData[i].at+".</div></div>"
         document.getElementById('music').innerHTML += div
     }
-    
+
+    var cookieOrder = getCookie('lastPlayingOrder')
+    var node = document.getElementsByClassName('player_subutton')[0]
+    if(cookieOrder != "") { 
+        node.style.backgroundImage = "url('imgs/icons/"+cookieOrder+".svg')"
+        node.setAttribute('onclick',"changePlayingOrder('"+cookieOrder+"')")
+        currentStatus = cookieOrder
+     }
     picBackground()
 }

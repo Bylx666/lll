@@ -1,6 +1,15 @@
 var lastRandomNumber
+
 var fadeCd = 0
+
+var playerEntranceRotateKakudo = 0
+
 var songProgress
+var lastSong
+var thisSong
+var nextSong
+var currentStatus
+
 
 /** 
  *  @param max The maxium number
@@ -39,18 +48,23 @@ function activePageSelector() {
    }
  }
 
-function play(musicURL,musicCover){
+function play(i,musicURL,musicCover){
     var media = document.getElementById('musicMedia')
     var button = document.getElementsByClassName('player_button')[1]
     button.style.backgroundImage = "url('imgs/icons/pause.svg')"
     button.setAttribute('onclick','pause()')
-    if(musicURL == 'button') { media.play(); return }
+    if(songProgress == undefined) { musicProgress() }
+    playerEntranceRotate = setInterval (function () { 
+        playerEntranceRotateKakudo += 60
+        document.querySelector('#playerEntrance').style.transform = 'rotate(' + playerEntranceRotateKakudo + 'deg)';
+     },1000)
+    if(i == 'button') { media.play(); return }
     document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicCover+".jpg)"
     media.setAttribute('src',musicURL)
     media.play()
     var pe = document.getElementById('playerEntrance')
     pe.onclick = function () { goTo('music','player') }
-    if(songProgress == undefined) { musicProgress() }
+    thisSong = i
 }
 function pause() { 
     var media = document.getElementById('musicMedia')
@@ -58,6 +72,7 @@ function pause() {
     button.style.backgroundImage = "url('imgs/icons/play.svg')"
     button.setAttribute('onclick','play(\'button\')')
     media.pause()
+    if(playerEntranceRotate != undefined) { clearInterval(playerEntranceRotate) }
  }
 function musicProgress() { 
     var clicked = false
@@ -72,7 +87,7 @@ function musicProgress() {
         position = now / total * document.documentElement.clientWidth
         progress.style.width = position + "px"
         thumb.style.left = position + "px"
-        if(now == total) { pause() }
+        if(now == total) { next() }
     },500)
 
     var start
@@ -121,7 +136,47 @@ function musicProgress() {
     document.addEventListener('touchend', moveEnd)
     var bar = document.querySelector('.music_progress_bar')
     bar.addEventListener('mouseup', der)
-    bar.addEventListener('touchend', der)
+    bar.addEventListener('touchstart', der)
+ }
+function changePlayingOrder() { 
+    var node = document.getElementsByClassName('player_subutton')[0]
+    if(currentStatus == 'repeat') { 
+        node.style.backgroundImage = "url('imgs/icons/shuffle.svg')"
+        node.setAttribute('onclick',"changePlayingOrder('shuffle')")
+        document.cookie = "lastPlayingOrder=shuffle;SameSite=Lax"
+        currentStatus = 'shuffle'
+     }
+    else if(currentStatus == 'shuffle') {
+        node.style.backgroundImage = "url('imgs/icons/repeat1.svg')"
+        node.setAttribute('onclick',"changePlayingOrder('repeat1')")
+        document.cookie = "lastPlayingOrder=repeat1;SameSite=Lax"
+        currentStatus = 'repeat1'
+    }
+    else if(currentStatus == 'repeat1') {
+        node.style.backgroundImage = "url('imgs/icons/repeat.svg')"
+        node.setAttribute('onclick',"changePlayingOrder('repeat')")
+        document.cookie = "lastPlayingOrder=repeat;SameSite=Lax"
+        currentStatus = 'repeat'
+    }
+    
+ }
+function next() { 
+    pause()
+    var nextSong
+    if(currentStatus == 'repeat') {nextSong = thisSong + 1}
+    else if(currentStatus == 'shuffle') {nextSong = randomNumber( musicData.length-1 , 0 )}
+    else if(currentStatus == 'repeat1') {nextSong = thisSong}
+    if(nextSong > musicData.length-1) {nextSong = 0}
+    if(nextSong < 0) {nextSong = musicData.length-1}
+    play(nextSong,musicData[nextSong].url,musicData[nextSong].cvr)
+ }
+function last() { 
+    var nextSong
+    if(currentStatus == 'repeat') {
+        nextSong = thisSong - 1; 
+        if(nextSong < 0) {nextSong = musicData.length-1}
+        play(nextSong,musicData[nextSong].url,musicData[nextSong].cvr)}
+    else next()
  }
 
 function picBackground() { 
@@ -285,3 +340,15 @@ function picBackground() {
     setTimeout(function(){document.getElementById('notice').style.opacity = 0},4000)
     setTimeout(function(){document.getElementById('notice').style.display = 'none'},5000)
   }
+
+function getCookie(cname) {
+    var ca = document.cookie.split(';')
+    for(var i=0; i<ca.length;i++) {
+        if(ca[i].includes(cname)) {
+            return ca[0].substring(
+                ca[0].indexOf('=') + 1
+            )
+        }
+    }
+    return ""
+}
