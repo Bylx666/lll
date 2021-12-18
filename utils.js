@@ -2,6 +2,7 @@ var lastRandomNumber
 
 var fadeCd = 0
 
+var playerEntranceRotate
 var playerEntranceRotateKakudo = 0
 
 var songProgress
@@ -9,6 +10,7 @@ var lastSong
 var thisSong
 var nextSong
 var currentStatus
+var timeArray = []
 
 
 /** 
@@ -48,7 +50,7 @@ function activePageSelector() {
    }
  }
 
-function play(i,musicURL,musicCover){
+function play(i){
     var media = document.getElementById('musicMedia')
     var button = document.getElementsByClassName('player_button')[1]
     button.style.backgroundImage = "url('imgs/icons/pause.svg')"
@@ -59,12 +61,16 @@ function play(i,musicURL,musicCover){
         document.querySelector('#playerEntrance').style.transform = 'rotate(' + playerEntranceRotateKakudo + 'deg)';
      },1000)
     if(i == 'button') { media.play(); return }
-    document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicCover+".jpg)"
-    media.setAttribute('src',musicURL)
+    document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicData[i].cvr+".jpg)"
+    document.querySelector('.play_title').innerHTML = musicData[i].tt
+    media.setAttribute('src',musicData[i].url)
     media.play()
     var pe = document.getElementById('playerEntrance')
+    pe.style.backgroundImage = "url(imgs/cover/"+musicData[i].cvr+".jpg)"
     pe.onclick = function () { goTo('music','player') }
+    document.cookie = "thisSong="+i+";SameSite=Lax"
     thisSong = i
+    lyric()
 }
 function pause() { 
     var media = document.getElementById('musicMedia')
@@ -88,8 +94,24 @@ function musicProgress() {
         progress.style.width = position + "px"
         thumb.style.left = position + "px"
         if(now == total) { next() }
+        
+        for(var i = 0; i < document.getElementsByClassName('lyric_texts').length; i++){
+            if(now > timeArray[i] && now < timeArray[i+1]) {
+                for(var j = 0; j < document.getElementsByClassName('lyric_texts').length; j++) {
+                    document.getElementsByClassName('lyric_texts')[j].style = ''
+                }
+                document.querySelector('.play_lyric').style.top = 40 - 5 * i +"rem"
+                var currentLyric = document.getElementsByClassName('lyric_texts')[i].style
+                currentLyric.height = '10rem';
+                currentLyric.fontSize = '5rem';
+                currentLyric.color = 'white'
+                currentLyric.boxShadow = '0 0 2rem black'
+                currentLyric.backgroundColor = 'rgba(0,0,0,0.7)'
+                currentLyric.textShadow = '0 0 2rem black'
+                return
+            }
+        }
     },500)
-
     var start
     var now
     function der(e) { 
@@ -137,24 +159,23 @@ function musicProgress() {
     var bar = document.querySelector('.music_progress_bar')
     bar.addEventListener('mouseup', der)
     bar.addEventListener('touchstart', der)
+
  }
+
 function changePlayingOrder() { 
     var node = document.getElementsByClassName('player_subutton')[0]
     if(currentStatus == 'repeat') { 
         node.style.backgroundImage = "url('imgs/icons/shuffle.svg')"
-        node.setAttribute('onclick',"changePlayingOrder('shuffle')")
         document.cookie = "lastPlayingOrder=shuffle;SameSite=Lax"
         currentStatus = 'shuffle'
      }
     else if(currentStatus == 'shuffle') {
         node.style.backgroundImage = "url('imgs/icons/repeat1.svg')"
-        node.setAttribute('onclick',"changePlayingOrder('repeat1')")
         document.cookie = "lastPlayingOrder=repeat1;SameSite=Lax"
         currentStatus = 'repeat1'
     }
     else if(currentStatus == 'repeat1') {
         node.style.backgroundImage = "url('imgs/icons/repeat.svg')"
-        node.setAttribute('onclick',"changePlayingOrder('repeat')")
         document.cookie = "lastPlayingOrder=repeat;SameSite=Lax"
         currentStatus = 'repeat'
     }
@@ -164,18 +185,21 @@ function next() {
     pause()
     var nextSong
     if(currentStatus == 'repeat') {nextSong = thisSong + 1}
-    else if(currentStatus == 'shuffle') {nextSong = randomNumber( musicData.length-1 , 0 )}
+    else if(currentStatus == 'shuffle') {
+        nextSong = randomNumber( musicData.length-1 , 0 );
+        if(thisSong == nextSong) nextSong = randomNumber( musicData.length-1 , 0 );
+        }
     else if(currentStatus == 'repeat1') {nextSong = thisSong}
     if(nextSong > musicData.length-1) {nextSong = 0}
     if(nextSong < 0) {nextSong = musicData.length-1}
-    play(nextSong,musicData[nextSong].url,musicData[nextSong].cvr)
+    play(nextSong)
  }
 function last() { 
     var nextSong
     if(currentStatus == 'repeat') {
         nextSong = thisSong - 1; 
         if(nextSong < 0) {nextSong = musicData.length-1}
-        play(nextSong,musicData[nextSong].url,musicData[nextSong].cvr)}
+        play(nextSong)}
     else next()
  }
 
@@ -345,8 +369,8 @@ function getCookie(cname) {
     var ca = document.cookie.split(';')
     for(var i=0; i<ca.length;i++) {
         if(ca[i].includes(cname)) {
-            return ca[0].substring(
-                ca[0].indexOf('=') + 1
+            return ca[i].substring(
+                ca[i].indexOf('=') + 1
             )
         }
     }

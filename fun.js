@@ -51,16 +51,56 @@ function exhibit(){
 
 function music(){
     for(var i = 0;i < musicData.length;i++){
-        var div = "<div class=\"nom\" onclick=\"play(\'"+i+"\',\'"+musicData[i].url+"\',\'"+musicData[i].cvr+"\');goTo(\'music\',\'player\')\"><div class=\"pic cover/"+musicData[i].cvr+"\"></div><div class=\"title\">"+musicData[i].tt+".</div><div class=\"subtitle\">"+musicData[i].at+".</div></div>"
+        var div = "<div class=\"nom\" onclick=\"play(\'"+i+"\',\'"+musicData[i].url+"\',\'"+musicData[i].cvr+"\');goTo(\'music\',\'player\')\"><div class=\"pic cover/"+musicData[i].cvr+"\"></div><div class=\"title\">"+musicData[i].tt+"</div><div class=\"subtitle\">"+musicData[i].at+"</div></div>"
         document.getElementById('music').innerHTML += div
     }
 
     var cookieOrder = getCookie('lastPlayingOrder')
+    var cookieSong = getCookie('thisSong')
     var node = document.getElementsByClassName('player_subutton')[0]
     if(cookieOrder != "") { 
         node.style.backgroundImage = "url('imgs/icons/"+cookieOrder+".svg')"
-        node.setAttribute('onclick',"changePlayingOrder('"+cookieOrder+"')")
+        node.setAttribute('onclick',"changePlayingOrder()")
         currentStatus = cookieOrder
-     }
+     }else { currentStatus = 'repeat' }
+
+    if(cookieSong != "") { 
+        thisSong = cookieSong
+     }else { thisSong = 0 }
+     
+    document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicData[thisSong].cvr+".jpg)"
+    document.querySelector('.play_title').innerHTML = musicData[thisSong].tt
+    document.getElementById('musicMedia').setAttribute('src',musicData[thisSong].url)
+    lyric()
     picBackground()
+}
+
+function lyric(){
+    var id = musicData[thisSong].url.substring(
+        musicData[thisSong].url.indexOf('=') + 1
+        )
+    var xhr = new XMLHttpRequest()
+    var lyric
+    document.querySelector('.play_lyric').innerHTML = ''
+    xhr.open('get','https://sukmusicapi.vercel.app/lyric?id='+id)
+    xhr.send()
+    xhr.onreadystatechange = function () { 
+        if(xhr.readyState == 4 && xhr.status == 200){
+            lyric = xhr.response
+            if(lyric != undefined) lyricParse()
+         }
+     }
+    function lyricParse() { 
+        lyric = JSON.parse(lyric).lrc.lyric.split('\n')
+        for(var i = 0; i < lyric.length; i++) {
+            var time = lyric[i].substring(1,lyric[i].indexOf(']'))
+            var minute = parseFloat(time.substring(0,lyric[i].indexOf(':') + 1))
+            var second = parseFloat(time.substring(lyric[i].indexOf(':')))
+            var time = second + minute * 60
+            timeArray = timeArray.concat([time])
+
+            var content = lyric[i].substring(lyric[i].indexOf(']') + 1)
+            document.querySelector('.play_lyric').innerHTML += "<div class='lyric_texts'>"+content+"</div>"
+         }
+     }
 }
