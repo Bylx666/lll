@@ -57,9 +57,12 @@ function play(i){
     button.setAttribute('onclick','pause()')
     if(songProgress == undefined) { musicProgress() }
     playerEntranceRotate = setInterval (function () { 
-        playerEntranceRotateKakudo += 60
+        playerEntranceRotateKakudo += 12
         document.querySelector('#playerEntrance').style.transform = 'rotate(' + playerEntranceRotateKakudo + 'deg)';
-     },1000)
+        if(phone)
+        document.querySelector('.play_cover').style.transform = 'translate(-50%) rotate(' + playerEntranceRotateKakudo + 'deg)';
+
+     },200)
     if(i == 'button') { media.play(); return }
     document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicData[i].cvr+".jpg)"
     document.querySelector('.play_title').innerHTML = musicData[i].tt
@@ -101,6 +104,7 @@ function musicProgress() {
                     document.getElementsByClassName('lyric_texts')[j].style = ''
                 }
                 document.querySelector('.play_lyric').style.top = 40 - 5 * i +"rem"
+                if(phone)document.querySelector('.play_lyric').style.top = 70 - 5 * i +"rem"
                 var currentLyric = document.getElementsByClassName('lyric_texts')[i].style
                 currentLyric.height = '10rem';
                 currentLyric.fontSize = '5rem';
@@ -111,7 +115,7 @@ function musicProgress() {
                 return
             }
         }
-    },500)
+    },200)
     var start
     var now
     function der(e) { 
@@ -144,6 +148,7 @@ function musicProgress() {
         if (now > document.documentElement.clientWidth) { now = document.documentElement.clientWidth ;}
         progress.style.width = now + "px" 
         thumb.style.left = now + "px" 
+        if(getSelection) document.getSelection().removeAllRanges()
     }
     function moveEnd() { 
         if(!clicked){ return }
@@ -295,6 +300,7 @@ function picBackground() {
     setTimeout(function(){B.opacity = '1'},10) 
 
     setTimeout(function(){
+        if(phone) return
         if(!activePageSelector().className.includes('scrollable')) {
             document.getElementById('scrollbar').style.display = 'none'
         }
@@ -303,6 +309,7 @@ function picBackground() {
  }
 
  function scrollBar() { 
+    if(phone) return
     var thumb = document.getElementsByClassName('scrollthumb')[0]
     var track = document.getElementById('scrollbar')
     var content = activePageSelector()

@@ -1,4 +1,4 @@
-
+var phone
 function init() {
     picBackground()
     exhibit()
@@ -8,13 +8,15 @@ function init() {
     if(document.getElementById('background').clientWidth<document.getElementById('background').clientHeight){
         backgroundImageAlter('p')
         phoneFit()
-        
+        phone = true
     }
     else{
         backgroundImageAlter('c')
+        phone = false
     }
 }
 function phoneFit(){
+    document.getElementsByTagName('html')[0].style.overflow = 'visible'
     document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 150 +"px"
     var home = document.getElementById('home').style
     home.flexDirection = 'column'
@@ -22,24 +24,80 @@ function phoneFit(){
     home.top = '12rem'
 
     var pc = document.getElementById('playerControl').style
-    pc.width = '100%'
     pc.borderRadius = '0'
     pc.opacity = '1'
     pc.bottom = '0'
-    pc.backgroundColor = 'rgba(0,0,0,0.7)'
     var pcb = document.querySelector('.music_progress_bar').style
     pcb.bottom = '12rem'
     pcb.height = '3rem'
     document.querySelector('.music_progress_thumb').style.opacity = '1'
-    var sb = document.getElementsByClassName('player_subutton')
-    sb[0].style.left = '2rem'
-    var b = document.getElementsByClassName('player_button')
     document.querySelector('.play_cover').style.display = 'none'
     document.querySelector('.play_title').style.display = 'none'
     var pl = document.querySelector('.play_lyric').style
     pl.left = '0'
     pl.width = '100%'
-    
+    var cover = document.querySelector('.play_cover').style
+    cover.borderRadius = '50%'
+    cover.top = '30rem'
+    cover.left = '50%'
+    cover.transform = 'translate(-50%)'
+    cover.width = '50rem'
+    cover.height = '50rem'
+    cover.transition = 'all 0.2s linear'
+    var tt = document.querySelector('.play_title').style
+    tt.left = '50%'
+    tt.transform = 'translate(-50%)'
+    tt.overflow = 'scroll'
+    tt.fontSize = '10rem'
+    tt.width = '100%'
+    tt.top = '90rem'
+    tt.fontWeight = '700'
+    tt.textShadow = '0 0 2rem white'
+    var ppc = document.getElementById('phonePCCover')
+    ppc.style.display = 'flex'
+    ppc.addEventListener('touchstart',showHiddenController)
+    var leftTime = 0
+    setInterval(function(){
+
+        if(currentPlayerContent =='cover')return
+        if(leftTime>0)leftTime -= 1
+        if(leftTime<=0){
+            leftTime = 0;
+            document.getElementById('phonePCCover').style.backgroundColor = ''
+            document.getElementById('playerControl').style.display = 'none'
+            document.getElementsByClassName('music_progress_bar')[0].style.bottom = '0'
+            document.getElementsByClassName('music_progress_bar')[0].style.height = '1rem'
+            document.getElementsByClassName('music_progress_thumb')[0].style.opacity = '0'
+        }
+        
+    },1000)
+    function showHiddenController() { 
+        leftTime = 4
+        document.getElementById('phonePCCover').style.backgroundColor = 'rgba(0,0,0,0.7)'
+        document.getElementById('playerControl').style.display = 'flex'
+        document.getElementsByClassName('music_progress_bar')[0].style.bottom = '12rem'
+        document.getElementsByClassName('music_progress_bar')[0].style.height = '3rem'
+        document.getElementsByClassName('music_progress_thumb')[0].style.opacity = '1'
+     }
+
+    document.querySelector('.play_lyric').addEventListener('touchend',changePlayerContent)
+    document.querySelector('.play_cover').addEventListener('touchend',changePlayerContent)
+    if(getCookie('currentPhonePlayerContent') != undefined) var currentPlayerContent = getCookie('currentPhonePlayerContent')
+    else var currentPlayerContent = 'lyric'
+    function changePlayerContent() {
+        if(currentPlayerContent == 'cover') {
+            document.querySelector('.play_lyric').style.display = 'inline'
+            document.querySelector('.play_cover').style.display = 'none'
+            document.querySelector('.play_title').style.display = 'none'
+            currentPlayerContent = 'lyric'
+        }else{
+            document.querySelector('.play_lyric').style.display = 'none'
+            document.querySelector('.play_cover').style.display = 'inline'
+            document.querySelector('.play_title').style.display = 'inline'
+            currentPlayerContent = 'cover'
+        }
+        document.cookie = "currentPhonePlayerContent="+currentPlayerContent+";SameSite=Lax"
+    }
 }
 function backgroundImageAlter(screenPosition) {
     document.getElementById('background').style.backgroundImage = "url(imgs/bg/c2.jpg)"
