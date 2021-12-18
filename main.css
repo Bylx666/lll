@@ -113,7 +113,7 @@ html{
 #player{
     transition: all 1s;
     z-index: 20;
-    /* display: none; */
+    display: none;
     position: absolute;
     top: 0rem;
     left: 0;
