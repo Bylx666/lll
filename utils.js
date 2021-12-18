@@ -107,7 +107,7 @@ function musicProgress() {
                 currentLyric.color = 'white'
                 currentLyric.boxShadow = '0 0 2rem black'
                 currentLyric.backgroundColor = 'rgba(0,0,0,0.7)'
-                currentLyric.textShadow = '0 0 2rem black'
+                currentLyric.textShadow = '0 0 1rem white'
                 return
             }
         }
@@ -202,6 +202,7 @@ function last() {
         play(nextSong)}
     else next()
  }
+
 
 function picBackground() { 
     for(var i = 0;i<document.getElementsByClassName('pic').length;i++){

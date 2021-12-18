@@ -3,6 +3,7 @@ function init() {
     picBackground()
     exhibit()
     music()
+    volume()
     document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 100 +"px"
     if(document.getElementById('background').clientWidth<document.getElementById('background').clientHeight){
         backgroundImageAlter('p')
@@ -74,7 +75,6 @@ function music(){
     lyric()
     picBackground()
 }
-
 function lyric(){
     var id = musicData[thisSong].url.substring(
         musicData[thisSong].url.indexOf('=') + 1
@@ -103,4 +103,63 @@ function lyric(){
             document.querySelector('.play_lyric').innerHTML += "<div class='lyric_texts'>"+content+"</div>"
          }
      }
+}
+function volume(){
+    var button = document.getElementsByClassName('player_subutton')[1]
+    var controller = document.querySelector('.volume_controller')
+    function displayVolume() { 
+        document.querySelector('.volume_controller').style.width = '10rem'
+     } 
+    function hideVolume() { 
+        document.querySelector('.volume_controller').style.width = '0'
+     } 
+    var startPosition
+    var clicked = false
+    function start(e) { 
+        startPosition = e.pageX
+        clicked = true
+     }
+    function moving(e) { 
+        if(!clicked) return
+        var ctlr = document.querySelector('.volume_controller')
+        var total = ctlr.getBoundingClientRect().width
+        var currentVolume = (e.pageX - startPosition)/10 / total + document.getElementById('musicMedia').volume
+        document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-half.svg')"
+        if(currentVolume < 0) {currentVolume = 0; document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-mute.svg')"}
+        if(currentVolume > 1) {currentVolume = 1; document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume.svg')"}
+        document.getElementById('musicMedia').volume = currentVolume
+        document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
+        if(getSelection) document.getSelection().removeAllRanges()
+        document.cookie = "musicVolume="+currentVolume+";SameSite=Lax"
+     }
+    function end() { 
+        clicked = false
+     }
+    function click() { 
+        if(document.getElementById('musicMedia').volume == 0) {
+            document.getElementById('musicMedia').volume = 1
+            document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume.svg')"
+        }
+        else{
+            document.getElementById('musicMedia').volume = 0
+            document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-mute.svg')"
+        }
+        document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
+     }
+    button.addEventListener('mouseover',displayVolume)
+    controller.addEventListener('mouseover',displayVolume)
+    button.addEventListener('mouseleave',hideVolume)
+    controller.addEventListener('mouseleave',hideVolume)
+    controller.addEventListener('mousedown',start)
+    document.addEventListener('mousemove',moving)
+    document.addEventListener('mouseup',end)
+    button.addEventListener('click',click)
+    button.addEventListener('touchup',click)
+
+    var lastVolume = getCookie('musicVolume')
+    if(lastVolume == '0') {document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-mute.svg')"}
+    else if(lastVolume == '1') {document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume.svg')"}
+    else {document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-half.svg')"}
+    document.getElementById('musicMedia').volume = lastVolume
+    document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
 }
