@@ -161,6 +161,36 @@ function musicProgress() {
     bar.addEventListener('touchstart', der)
 
  }
+function lyric(){
+    var id = musicData[thisSong].url.substring(
+        musicData[thisSong].url.indexOf('=') + 1
+        )
+    var xhr = new XMLHttpRequest()
+    var lyric
+    document.querySelector('.play_lyric').innerHTML = ''
+    xhr.open('get','https://sukmusicapi.vercel.app/lyric?id='+id)
+    xhr.send()
+    xhr.onreadystatechange = function () { 
+        if(xhr.readyState == 4 && xhr.status == 200){
+            lyric = xhr.response
+            if(lyric != undefined) lyricParse()
+         }
+     }
+    function lyricParse() { 
+        timeArray = []
+        lyric = JSON.parse(lyric).lrc.lyric.split('\n')
+        for(var i = 0; i < lyric.length; i++) {
+            var time = lyric[i].substring(1,8)
+            var minute = parseFloat(time.substring(0,lyric[i].indexOf(':') + 1))
+            var second = parseFloat(time.substring(lyric[i].indexOf(':')))
+            var time = second + minute * 60
+            timeArray = timeArray.concat([time])
+
+            var content = lyric[i].substring(lyric[i].indexOf(']') + 1)
+            document.querySelector('.play_lyric').innerHTML += "<div class='lyric_texts'>"+content+"</div>"
+         }
+     }
+ }
 
 function changePlayingOrder() { 
     var node = document.getElementsByClassName('player_subutton')[0]

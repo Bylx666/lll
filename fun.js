@@ -7,14 +7,39 @@ function init() {
     document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 100 +"px"
     if(document.getElementById('background').clientWidth<document.getElementById('background').clientHeight){
         backgroundImageAlter('p')
-        var home = document.getElementById('home').style
-        home.flexDirection = 'column'
-        home.transform = 'translate(-50%,0)'
-        home.top = '12rem'
+        phoneFit()
+        
     }
     else{
         backgroundImageAlter('c')
     }
+}
+function phoneFit(){
+    document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 150 +"px"
+    var home = document.getElementById('home').style
+    home.flexDirection = 'column'
+    home.transform = 'translate(-50%,0)'
+    home.top = '12rem'
+
+    var pc = document.getElementById('playerControl').style
+    pc.width = '100%'
+    pc.borderRadius = '0'
+    pc.opacity = '1'
+    pc.bottom = '0'
+    pc.backgroundColor = 'rgba(0,0,0,0.7)'
+    var pcb = document.querySelector('.music_progress_bar').style
+    pcb.bottom = '12rem'
+    pcb.height = '3rem'
+    document.querySelector('.music_progress_thumb').style.opacity = '1'
+    var sb = document.getElementsByClassName('player_subutton')
+    sb[0].style.left = '2rem'
+    var b = document.getElementsByClassName('player_button')
+    document.querySelector('.play_cover').style.display = 'none'
+    document.querySelector('.play_title').style.display = 'none'
+    var pl = document.querySelector('.play_lyric').style
+    pl.left = '0'
+    pl.width = '100%'
+    
 }
 function backgroundImageAlter(screenPosition) {
     document.getElementById('background').style.backgroundImage = "url(imgs/bg/c2.jpg)"
@@ -72,38 +97,13 @@ function music(){
     document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicData[thisSong].cvr+".jpg)"
     document.querySelector('.play_title').innerHTML = musicData[thisSong].tt
     document.getElementById('musicMedia').setAttribute('src',musicData[thisSong].url)
+    var pe = document.getElementById('playerEntrance')
+    pe.className = "pic cover/"+musicData[thisSong].cvr
+    pe.onclick = function () { goTo('music','player') }
     lyric()
     picBackground()
 }
-function lyric(){
-    var id = musicData[thisSong].url.substring(
-        musicData[thisSong].url.indexOf('=') + 1
-        )
-    var xhr = new XMLHttpRequest()
-    var lyric
-    document.querySelector('.play_lyric').innerHTML = ''
-    xhr.open('get','https://sukmusicapi.vercel.app/lyric?id='+id)
-    xhr.send()
-    xhr.onreadystatechange = function () { 
-        if(xhr.readyState == 4 && xhr.status == 200){
-            lyric = xhr.response
-            if(lyric != undefined) lyricParse()
-         }
-     }
-    function lyricParse() { 
-        lyric = JSON.parse(lyric).lrc.lyric.split('\n')
-        for(var i = 0; i < lyric.length; i++) {
-            var time = lyric[i].substring(1,lyric[i].indexOf(']'))
-            var minute = parseFloat(time.substring(0,lyric[i].indexOf(':') + 1))
-            var second = parseFloat(time.substring(lyric[i].indexOf(':')))
-            var time = second + minute * 60
-            timeArray = timeArray.concat([time])
 
-            var content = lyric[i].substring(lyric[i].indexOf(']') + 1)
-            document.querySelector('.play_lyric').innerHTML += "<div class='lyric_texts'>"+content+"</div>"
-         }
-     }
-}
 function volume(){
     var button = document.getElementsByClassName('player_subutton')[1]
     var controller = document.querySelector('.volume_controller')
