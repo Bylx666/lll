@@ -326,10 +326,6 @@ function picBackground() {
         clicked = true
         start = e.pageY
      }
-    thumb.addEventListener('touchstart',function (e) { 
-        clicked = true
-        start = e.targetTouches[0].pageY
-     })
     document.onmousemove = function (e) {
         if(!clicked) {return}
         now = e.pageY - start + end
@@ -339,26 +335,11 @@ function picBackground() {
         content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         if(window.getSelection) {window.getSelection().removeAllRanges()}
      }
-    document.addEventListener('touchmove',function (e) {
-        if(!clicked) {return}
-        now = e.targetTouches[0].pageY - start + end
-        if(now < 0) { now = 0 }
-        else if(now > track.offsetHeight - thumb.offsetHeight) { now = track.offsetHeight - thumb.offsetHeight }
-        thumb.style.top = now + "px"
-        content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
-        if(window.getSelection) {window.getSelection().removeAllRanges()}
-        e.preventDefault()
-     }, { passive: false })
     document.onmouseup = function () {
         clicked = false
         end = thumb.offsetTop
      }
-    document.addEventListener('touchend',function () {
-        clicked = false
-        end = thumb.offsetTop
-     })
     
-     var touched = false
      document.onwheel = wheel
      function wheel(event) { 
         now += event.deltaY / 5
@@ -368,25 +349,6 @@ function picBackground() {
         content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
         end = thumb.offsetTop
       }
-      document.addEventListener('touchstart',function (e) {
-        touched = true
-        start = e.targetTouches[0].pageY
-      })
-      document.addEventListener('touchmove',function (e) {
-        if(clicked) {return}
-        if(!touched) {return}
-        now = ( - e.targetTouches[0].pageY + start ) / 6 + end
-        if(now < 0) { now = 0 }
-        else if(now > track.offsetHeight - thumb.offsetHeight) { now = track.offsetHeight - thumb.offsetHeight }
-        thumb.style.top = now + "px"
-        content.style.top = "calc(10rem - " + now / scrollBarHeight + "px)"
-        if(window.getSelection) {window.getSelection().removeAllRanges()}
-        e.preventDefault()
-      }, { passive: false })
-      document.addEventListener('touchend',function () {
-        end = thumb.offsetTop
-        touched = false
-      })
   }
 
  function showPicture(order) { 

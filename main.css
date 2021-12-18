@@ -114,7 +114,7 @@ html{
     transition: all 1s;
     z-index: 20;
     display: none;
-    position: absolute;
+    position: fixed;
     top: 0rem;
     left: 0;
     height: 100%;

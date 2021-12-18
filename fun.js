@@ -31,8 +31,6 @@ function phoneFit(){
     pcb.bottom = '12rem'
     pcb.height = '3rem'
     document.querySelector('.music_progress_thumb').style.opacity = '1'
-    document.querySelector('.play_cover').style.display = 'none'
-    document.querySelector('.play_title').style.display = 'none'
     var pl = document.querySelector('.play_lyric').style
     pl.left = '0'
     pl.width = '100%'
@@ -82,6 +80,8 @@ function phoneFit(){
 
     document.querySelector('.play_lyric').addEventListener('touchend',changePlayerContent)
     document.querySelector('.play_cover').addEventListener('touchend',changePlayerContent)
+    changePlayerContent()
+    changePlayerContent()
     if(getCookie('currentPhonePlayerContent') != undefined) var currentPlayerContent = getCookie('currentPhonePlayerContent')
     else var currentPlayerContent = 'lyric'
     function changePlayerContent() {
@@ -197,10 +197,12 @@ function volume(){
         if(document.getElementById('musicMedia').volume == 0) {
             document.getElementById('musicMedia').volume = 1
             document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume.svg')"
+            document.cookie = "musicVolume=1;SameSite=Lax"
         }
         else{
             document.getElementById('musicMedia').volume = 0
             document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-mute.svg')"
+            document.cookie = "musicVolume=0;SameSite=Lax"
         }
         document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
      }
