@@ -249,7 +249,7 @@ var musicData = JSON.parse(
     '},' +
     '{' +
     '"tt":"LIVE with a smile!" ,'+
-    '"at":"Liella/?" ,'+
+    '"at":"Aqours / 虹ヶ咲学園スクールアイドル同好会 / Liella!" ,'+
     '"cvr":"liveWithASmile" ,'+
     '"nid":"1892824240"'+
     '},' +
