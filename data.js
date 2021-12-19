@@ -208,7 +208,7 @@ var musicData = JSON.parse(
     '{' +
     '"tt":"Starlight Prologue" ,'+
     '"at":"Liella" ,'+
-    '"cvr":"starLightPrologue.png" ,'+
+    '"cvr":"starLightPrologue" ,'+
     '"nid":"1888667282"'+
     '},' +
     '{' +
