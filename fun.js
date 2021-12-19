@@ -154,7 +154,7 @@ function music(){
      
     document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicData[thisSong].cvr+".jpg)"
     document.querySelector('.play_title').innerHTML = musicData[thisSong].tt
-    document.getElementById('musicMedia').setAttribute('src',musicData[thisSong].url)
+    document.getElementById('musicMedia').setAttribute('src','https://music.163.com/song/media/outer/url?id='+musicData[thisSong].nid)
     var pe = document.getElementById('playerEntrance')
     pe.className = "pic cover/"+musicData[thisSong].cvr
     pe.onclick = function () { goTo('music','player') }
@@ -171,28 +171,28 @@ function volume(){
     function hideVolume() { 
         document.querySelector('.volume_controller').style.width = '0'
      } 
-    var startPosition
-    var clicked = false
-    function start(e) { 
-        startPosition = e.pageX
-        clicked = true
-     }
-    function moving(e) { 
-        if(!clicked) return
-        var ctlr = document.querySelector('.volume_controller')
-        var total = ctlr.getBoundingClientRect().width
-        var currentVolume = (e.pageX - startPosition)/10 / total + document.getElementById('musicMedia').volume
-        document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-half.svg')"
-        if(currentVolume < 0) {currentVolume = 0; document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-mute.svg')"}
-        if(currentVolume > 1) {currentVolume = 1; document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume.svg')"}
-        document.getElementById('musicMedia').volume = currentVolume
-        document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
-        if(getSelection) document.getSelection().removeAllRanges()
-        document.cookie = "musicVolume="+currentVolume+";SameSite=Lax"
-     }
-    function end() { 
-        clicked = false
-     }
+     var startPosition
+     var clicked = false
+     function start(e) { 
+         startPosition = e.pageX
+         clicked = true
+      }
+     function moving(e) { 
+         if(!clicked) return
+         var ctlr = document.querySelector('.volume_controller')
+         var total = ctlr.getBoundingClientRect().width
+         var currentVolume = (e.pageX - startPosition)/10 / total + document.getElementById('musicMedia').volume
+         document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-half.svg')"
+         if(currentVolume < 0) {currentVolume = 0; document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-mute.svg')"}
+         if(currentVolume > 1) {currentVolume = 1; document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume.svg')"}
+         document.getElementById('musicMedia').volume = currentVolume
+         document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
+         if(getSelection) document.getSelection().removeAllRanges()
+         document.cookie = "musicVolume="+currentVolume+";SameSite=Lax"
+      }
+     function end() { 
+         clicked = false
+      }
     function click() { 
         if(document.getElementById('musicMedia').volume == 0) {
             document.getElementById('musicMedia').volume = 1
@@ -206,14 +206,16 @@ function volume(){
         }
         document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
      }
-    button.addEventListener('mouseover',displayVolume)
-    controller.addEventListener('mouseover',displayVolume)
-    button.addEventListener('mouseleave',hideVolume)
-    controller.addEventListener('mouseleave',hideVolume)
-    controller.addEventListener('mousedown',start)
-    document.addEventListener('mousemove',moving)
-    document.addEventListener('mouseup',end)
-    button.addEventListener('click',click)
+    if(!phone){
+        button.addEventListener('mouseover',displayVolume)
+        controller.addEventListener('mouseover',displayVolume)
+        button.addEventListener('mouseleave',hideVolume)
+        controller.addEventListener('mouseleave',hideVolume)
+        controller.addEventListener('mousedown',start)
+        document.addEventListener('mousemove',moving)
+        document.addEventListener('mouseup',end)
+        button.addEventListener('click',click)
+    }
     button.addEventListener('touchup',click)
 
     var lastVolume = getCookie('musicVolume')

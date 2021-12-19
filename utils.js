@@ -66,7 +66,7 @@ function play(i){
     if(i == 'button') { media.play(); return }
     document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicData[i].cvr+".jpg)"
     document.querySelector('.play_title').innerHTML = musicData[i].tt
-    media.setAttribute('src',musicData[i].url)
+    media.setAttribute('src','https://music.163.com/song/media/outer/url?id='+musicData[i].nid)
     media.play()
     var pe = document.getElementById('playerEntrance')
     pe.style.backgroundImage = "url(imgs/cover/"+musicData[i].cvr+".jpg)"
@@ -167,9 +167,7 @@ function musicProgress() {
 
  }
 function lyric(){
-    var id = musicData[thisSong].url.substring(
-        musicData[thisSong].url.indexOf('=') + 1
-        )
+    var id = musicData[thisSong].nid
     var xhr = new XMLHttpRequest()
     var lyric
     document.querySelector('.play_lyric').innerHTML = ''
@@ -313,8 +311,8 @@ function picBackground() {
     var thumb = document.getElementsByClassName('scrollthumb')[0]
     var track = document.getElementById('scrollbar')
     var content = activePageSelector()
-    var view = document.documentElement.clientHeight
-    var all = document.documentElement.scrollHeight
+    var view = document.querySelector('#scrollbar').offsetHeight
+    var all = content.offsetHeight
     var scrollBarHeight = view / all
     thumb.style.height = scrollBarHeight * 100 + "%"
     

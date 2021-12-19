@@ -39,14 +39,14 @@ html{
 
 #scrollbar{
     border-radius: 2rem;
-    /* box-shadow: 0 0 2rem black inset; */
-    z-index: 30;
+    box-shadow: 0 0 2rem black inset;
+    z-index: 1;
     transition: all 1s;
     position: fixed;
-    top:0;
-    right:0;
+    top: 10rem;
+    right: 0;
     width: 3rem;
-    height: 100%
+    height: calc(100% - 10rem)
 }
 .scrollthumb{
     top:0;
