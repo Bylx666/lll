@@ -217,12 +217,13 @@ function changePlayingOrder() {
 function next() { 
     pause()
     var nextSong
-    if(currentStatus == 'repeat') {nextSong = thisSong + 1}
+    var _thisSong = parseInt(thisSong)
+    if(currentStatus == 'repeat') {nextSong = _thisSong + 1}
     else if(currentStatus == 'shuffle') {
         nextSong = randomNumber( musicData.length-1 , 0 );
-        if(thisSong == nextSong) nextSong = randomNumber( musicData.length-1 , 0 );
+        if(_thisSong == nextSong) nextSong = randomNumber( musicData.length-1 , 0 );
         }
-    else if(currentStatus == 'repeat1') {nextSong = thisSong}
+    else if(currentStatus == 'repeat1') {nextSong = _thisSong}
     if(nextSong > musicData.length-1) {nextSong = 0}
     if(nextSong < 0) {nextSong = musicData.length-1}
     play(nextSong)
