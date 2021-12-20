@@ -247,23 +247,23 @@ function headSets(){
     var SetsList = function(order1,order2){
         return "<div class=\"nom\" onclick=\"showHeadEffect(\'"+order1+order2+"\')\"><div class=\"pic headSets/"+order1+order2+"\"></div><div class=\"title\">"+order1+order2+".jpg</div></div>"
     }
-    for(var i = 1;i<9;i++){
+    for(var i = 1;i<=9;i++){
         var div = SetsList('a',i)
         headSet[0].innerHTML += div
     }
-    for(var i = 1;i<9;i++){
+    for(var i = 1;i<=9;i++){
         var div = SetsList('b',i)
         headSet[1].innerHTML += div
     }
-    for(var i = 1;i<9;i++){
+    for(var i = 1;i<=9;i++){
         var div = SetsList('c',i)
         headSet[2].innerHTML += div
     }
-    for(var i = 1;i<9;i++){
+    for(var i = 1;i<=9;i++){
         var div = SetsList('d',i)
         headSet[3].innerHTML += div
     }
-    for(var i = 1;i<9;i++){
+    for(var i = 1;i<=9;i++){
         var div = SetsList('e',i)
         headSet[4].innerHTML += div
     }
