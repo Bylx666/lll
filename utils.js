@@ -350,12 +350,18 @@ function picBackground() {
       }
   }
 
- function showPicture(order) { 
+function showPicture(order) { 
      document.getElementsByClassName('show_picture_container')[0].style.backgroundImage = "url(imgs/bg/"+order+".jpg)"
      goTo('exhibition','show_picture')
   }
 
- function notice(content,hojyuu) { 
+function showHeadEffect(order) { 
+    for(var i = 0;i<document.getElementsByClassName('headPreviewPic').length;i++)
+        document.getElementsByClassName('headPreviewPic')[i].style.backgroundImage = "url(imgs/headSets/"+order+".jpg)"
+    goTo('headSets','headPreview')
+ }
+
+function notice(content,hojyuu) { 
     document.getElementsByClassName('notice_content')[0].innerHTML = content
     document.getElementsByClassName('notice_hojyuu')[0].innerHTML = hojyuu
     document.getElementById('notice').style.opacity = 1

@@ -4,6 +4,7 @@ function init() {
     exhibit()
     music()
     volume()
+    headSets()
     document.getElementsByTagName('html')[0].style.fontSize = document.getElementById('background').clientHeight / 100 +"px"
     if(document.getElementById('background').clientWidth<document.getElementById('background').clientHeight){
         backgroundImageAlter('p')
@@ -98,6 +99,11 @@ function phoneFit(){
         }
         document.cookie = "currentPhonePlayerContent="+currentPlayerContent+";SameSite=Lax"
     }
+
+    var headPreview = document.querySelector('.headPreviewApp').style
+    headPreview.left = '0'
+    headPreview.width = '100%'
+    document.getElementsByClassName('headPreviewPic')[0].style.right = '2rem'
 }
 function backgroundImageAlter(screenPosition) {
     document.getElementById('background').style.backgroundImage = "url(imgs/bg/c2.jpg)"
@@ -167,7 +173,6 @@ function music(){
     lyric()
     picBackground()
 }
-
 function volume(){
     var button = document.getElementsByClassName('player_subutton')[1]
     var controller = document.querySelector('.volume_controller')
@@ -230,4 +235,37 @@ function volume(){
     else {document.getElementsByClassName('player_subutton')[1].style.backgroundImage = "url('imgs/icons/volume-half.svg')"}
     document.getElementById('musicMedia').volume = lastVolume
     document.querySelector('.volume_controller_progress').style.width = document.getElementById('musicMedia').volume * 100 + "%"
+}
+
+function headSets(){
+    for(var i = 0;i<5;i++){
+        var div = "<div class='headSet'></div>"
+        document.getElementById('headSets').innerHTML += div
+    }
+
+    var headSet = document.getElementsByClassName('headSet')
+    var SetsList = function(order1,order2){
+        return "<div class=\"nom\" onclick=\"showHeadEffect(\'"+order1+order2+"\')\"><div class=\"pic headSets/"+order1+order2+"\"></div><div class=\"title\">"+order1+order2+".jpg</div></div>"
+    }
+    for(var i = 1;i<9;i++){
+        var div = SetsList('a',i)
+        headSet[0].innerHTML += div
+    }
+    for(var i = 1;i<9;i++){
+        var div = SetsList('b',i)
+        headSet[1].innerHTML += div
+    }
+    for(var i = 1;i<9;i++){
+        var div = SetsList('c',i)
+        headSet[2].innerHTML += div
+    }
+    for(var i = 1;i<9;i++){
+        var div = SetsList('d',i)
+        headSet[3].innerHTML += div
+    }
+    for(var i = 1;i<9;i++){
+        var div = SetsList('e',i)
+        headSet[4].innerHTML += div
+    }
+    picBackground()
 }
