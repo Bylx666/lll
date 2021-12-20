@@ -139,6 +139,7 @@ function music(){
         if(musicData[i].at == 'μ\'s') background = 'rgba(233,81,147,0.7)'
         else if(musicData[i].at == 'Aqours') background = 'rgba(0,160,233,0.7)'
         else if(musicData[i].at == 'Liella') background = 'rgba(253,253,253,0.7)'
+        else if(musicData[i].at == '虹ヶ咲学園スクールアイドル同好会') background = 'rgba(220,141,0,0.7)'
         else background = ''
         var div = "<div style='background:"+background+"' class=\"nom\" onclick=\"play(\'"+i+"\',\'"+musicData[i].url+"\',\'"+musicData[i].cvr+"\');goTo(\'music\',\'player\')\"><div class=\"pic cover/"+musicData[i].cvr+"\"></div><div class=\"title\">"+musicData[i].tt+"</div><div class=\"subtitle\">"+musicData[i].at+"</div></div>"
         document.getElementById('music').innerHTML += div

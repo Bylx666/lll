@@ -264,6 +264,12 @@ var musicData = JSON.parse(
     '"at":"Liella" ,'+
     '"cvr":"tinyStars" ,'+
     '"nid":"1875023978"'+
+    '},' +
+    '{' +
+    '"tt":"NEO SKY, NEO MAP!" ,'+
+    '"at":"虹ヶ咲学園スクールアイドル同好会" ,'+
+    '"cvr":"neoSkyNeoMap" ,'+
+    '"nid":"1492603231"'+
     '}' +
 ']'
 )
