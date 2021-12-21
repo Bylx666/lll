@@ -13,6 +13,7 @@ Fork
 PR
 ### Are you ones good at finding happiness?
 If so, please learn to inject new songs about Love Live.  
+#### New Songs
 The database I use is the `data.js`. There I have vared a songList in JSON. Despite never heard of it, you can know what to do.  
 ```javascript
     '{' +
@@ -42,3 +43,6 @@ Repeat operations above, if your collection is finished, delect the comma at the
 )
 ```
 The cover file might be found in Browser Dev Tools, and the `nid` is in the link of chosen song page, there is usually `?id=...`. Just copy the id here.
+#### New pictures
+If you have favorite pictures about Love Live, and you would like to share, please copy them to `imgs/bg/` folder. Then you have to rename it or the system cannot scan of it. If your picture is vertical, rename it with `p` and a number after the current biggest number. If your picture is not `jpg` file, please directly change the file suffix into `jpg`. Usually the browser will not return anything wrong. If your picture is horitical, rename it with `c` and the one bigger number than the most.
+#### If anything is ready, refresh your `index.html` and you can find your work.

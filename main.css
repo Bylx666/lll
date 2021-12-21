@@ -4,6 +4,20 @@ div{font-family: ll;}
     text-shadow: 0 0 1rem white;
     color: white;
 }
+a{
+    color: rgba(233,81,147,0.7);
+    text-decoration: none;
+    transition: color 0.5s;
+}
+a:hover{
+    color: rgba(233,81,147,0.3);
+}
+a:active{
+    color: rgba(233,81,147,1);
+}
+a:visited{
+    color: rgba(81, 233, 225,0.4);
+}
 @font-face {
     font-family: ll;
     src: url(imgs/e.otf);
@@ -303,6 +317,30 @@ html{
     width: 100%;
 }
 
+#description{
+    z-index: 0;
+    transition: opacity 1s;
+    position: absolute;
+    display: flex;
+    /* opacity: 0; */
+    top: 10rem;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 10rem);
+    background-color: #e9519380;
+}
+.introFrame{
+    position: absolute;
+    border-radius: 3rem;
+    border: 1rem solid rgba(255, 255, 255, 0.7);
+    background-color: rgba(68, 165, 255, 0.3);
+}
+.introText{
+    position: absolute;
+    text-align: center;
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.7);
+}
 
 #notice{
     z-index: 30;

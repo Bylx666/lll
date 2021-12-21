@@ -17,7 +17,7 @@ In my view, if you have interest in my project, you **CAN** do **ANYThing** you 
 4. Write more in my `songData` list and collect popular or beautiful pictures for the exhibition.
 ### I do not like...
 1. Asking common questions that can be solved by searching
-2. [^yygq]
+2. yygq[^yygq]
 3. Listing wishes from the heaven
 ***
 ## About 
