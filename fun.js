@@ -55,6 +55,7 @@ function phoneFit(){
     var ppc = document.getElementById('phonePCCover')
     ppc.style.display = 'flex'
     ppc.addEventListener('touchstart',showHiddenController)
+    document.querySelector('.music_progress_bar').addEventListener('touchstart',showHiddenController)
     var leftTime = 0
     setInterval(function(){
 
