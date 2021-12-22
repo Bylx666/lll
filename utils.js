@@ -3,6 +3,7 @@ var lastRandomNumber
 var fadeCd = 0
 
 var playerEntranceRotate
+var isplayerEntranceRotate = false
 var playerEntranceRotateKakudo = 0
 
 var songProgress
@@ -56,13 +57,14 @@ function play(i){
     button.style.backgroundImage = "url('imgs/icons/pause.svg')"
     button.setAttribute('onclick','pause()')
     if(songProgress == undefined) { musicProgress() }
-    playerEntranceRotate = setInterval (function () { 
+    if(!isplayerEntranceRotate) playerEntranceRotate = setInterval (function () { 
         playerEntranceRotateKakudo += 12
         document.querySelector('#playerEntrance').style.transform = 'rotate(' + playerEntranceRotateKakudo + 'deg)';
         if(phone)
         document.querySelector('.play_cover').style.transform = 'translate(-50%) rotate(' + playerEntranceRotateKakudo + 'deg)';
 
      },200)
+    isplayerEntranceRotate = true
     if(i == 'button') { media.play(); return }
     document.querySelector('.play_cover').style.backgroundImage = "url(imgs/cover/"+musicData[i].cvr+".jpg)"
     document.querySelector('.play_title').innerHTML = musicData[i].tt
@@ -81,7 +83,7 @@ function pause() {
     button.style.backgroundImage = "url('imgs/icons/play.svg')"
     button.setAttribute('onclick','play(\'button\')')
     media.pause()
-    if(playerEntranceRotate != undefined) { clearInterval(playerEntranceRotate) }
+    if(isplayerEntranceRotate) { clearInterval(playerEntranceRotate); isplayerEntranceRotate = false; }
  }
 function musicProgress() { 
     var clicked = false
@@ -194,7 +196,6 @@ function lyric(){
          }
      }
  }
-
 function changePlayingOrder() { 
     var node = document.getElementsByClassName('player_subutton')[0]
     if(currentStatus == 'repeat') { 
@@ -231,7 +232,7 @@ function next() {
 function last() { 
     var nextSong
     if(currentStatus == 'repeat') {
-        nextSong = thisSong - 1; 
+        nextSong = parseInt(thisSong) - 1; 
         if(nextSong < 0) {nextSong = musicData.length-1}
         play(nextSong)}
     else next()
