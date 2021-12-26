@@ -285,6 +285,7 @@ function picBackground() {
         setTimeout(function(){B.opacity = '1';A.opacity = '0' },10) 
         document.getElementById('home').style.display = "flex"
         document.getElementById('scrollbar').style.display = 'none'
+        document.getElementById('header').style.background = 'linear-gradient(75deg, rgba(0,0,0,0) , #E95193)'
         return console.log('goto home')
      }
      if(b == 'player') { document.getElementById('header').style.background = 'none' }
