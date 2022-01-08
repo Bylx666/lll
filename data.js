@@ -348,6 +348,12 @@ var musicData = JSON.parse(
     '"at":"虹ヶ咲学園スクールアイドル同好会" ,'+
     '"cvr":"nijiiroPassion" ,'+
     '"nid":"1488806651"'+
+    '},' +
+    '{' +
+    '"tt":"Daydream Warrior" ,'+
+    '"at":"Aqours" ,'+
+    '"cvr":"dayWar" ,'+
+    '"nid":"448916074"'+
     '}' +
 ']'
 )
